@@ -118,31 +118,31 @@ class AppWindow(QtWidgets.QDialog):
         myUI.viewEquipment_Set2_IGNORE_P.textChanged.connect(me.calc_Equipment)
        
         # page: Hexa設定變更
-        myUI.hexaSetting_origin_STR.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_origin_DEX.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_origin_INT.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_origin_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_STR_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_DEX_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_INT_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_LUK_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_origin_ATTACK.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_origin_DMG_P.textChanged.connect(me.calc_HexaSetting)
-        myUI.hexaSetting_origin_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_origin_STR_UNIQUEIKE_P.textChanged.connect(me.calc_HexaSetting)
         myUI.hexaSetting_origin_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
 
-        myUI.hexaSetting_Set1_STR.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set1_DEX.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set1_INT.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set1_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_STR_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_DEX_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_INT_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_LUK_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_Set1_ATTACK.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_Set1_DMG_P.textChanged.connect(me.calc_HexaSetting)
-        myUI.hexaSetting_Set1_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set1_STR_UNIQUEIKE_P.textChanged.connect(me.calc_HexaSetting)
         myUI.hexaSetting_Set1_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
 
-        myUI.hexaSetting_Set2_STR.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set2_DEX.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set2_INT.textChanged.connect(me.calc_HexaSetting)        
-        myUI.hexaSetting_Set2_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_STR_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_DEX_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_INT_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_LUK_UNIQUE.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_Set2_ATTACK.textChanged.connect(me.calc_HexaSetting)        
         myUI.hexaSetting_Set2_DMG_P.textChanged.connect(me.calc_HexaSetting)
-        myUI.hexaSetting_Set2_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set2_STR_UNIQUEIKE_P.textChanged.connect(me.calc_HexaSetting)
         myUI.hexaSetting_Set2_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
         # page: 工具
         myUI.btnTools_IGNORE_SUBMIT.clicked.connect(me.doCalcIgnore)
@@ -1005,19 +1005,19 @@ class AppWindow(QtWidgets.QDialog):
                     'DMG_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_DMG_P.text()) / 100),
                     'ATTACK': 0 - myUI.textToFloat(myUI.hexaSetting_origin_ATTACK.text()),
                     
-                    'STRIKE_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_STRIKE_P.text()) / 100),
+                    'STRIKE_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_STR_UNIQUEIKE_P.text()) / 100),
                     'IGNORE_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_IGNORE_P.text()) / 100),
 
-                    'STR_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_STR.text()),
+                    'STR_UNIQUE': 0 - myUI.textToFloat(myUI.hexaSetting_origin_STR_UNIQUE.text()),
                     
 
-                    'DEX_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_DEX.text()),
+                    'DEX_UNIQUE': 0 - myUI.textToFloat(myUI.hexaSetting_origin_DEX_UNIQUE.text()),
                     
 
-                    'INT_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_INT.text()),
+                    'INT_UNIQUE': 0 - myUI.textToFloat(myUI.hexaSetting_origin_INT_UNIQUE.text()),
                     
 
-                    'LUK_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_LUK.text()),
+                    'LUK_UNIQUE': 0 - myUI.textToFloat(myUI.hexaSetting_origin_LUK_UNIQUE.text()),
                     
 
                     
@@ -1031,14 +1031,14 @@ class AppWindow(QtWidgets.QDialog):
             SET_INFO['DMG_P'] += (myUI.textToFloat(myUI.hexaSetting_Set1_DMG_P.text())/100)
             SET_INFO['ATTACK'] += myUI.textToFloat(myUI.hexaSetting_Set1_ATTACK.text())
             
-            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set1_STRIKE_P.text())/100)
-            SET_INFO['STR_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_STR.text())
+            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set1_STR_UNIQUEIKE_P.text())/100)
+            SET_INFO['STR_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set1_STR_UNIQUE.text())
             
-            SET_INFO['DEX_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_DEX.text())
+            SET_INFO['DEX_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set1_DEX_UNIQUE.text())
             
-            SET_INFO['INT_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_INT.text())
+            SET_INFO['INT_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set1_INT_UNIQUE.text())
             
-            SET_INFO['LUK_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_LUK.text())
+            SET_INFO['LUK_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set1_LUK_UNIQUE.text())
             
             
             
@@ -1059,14 +1059,14 @@ class AppWindow(QtWidgets.QDialog):
             SET_INFO['DMG_P'] += (myUI.textToFloat(myUI.hexaSetting_Set2_DMG_P.text())/100)
             SET_INFO['ATTACK'] += myUI.textToFloat(myUI.hexaSetting_Set2_ATTACK.text())
             
-            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set2_STRIKE_P.text())/100)
-            SET_INFO['STR_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_STR.text())
+            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set2_STR_UNIQUEIKE_P.text())/100)
+            SET_INFO['STR_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set2_STR_UNIQUE.text())
             
-            SET_INFO['DEX_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_DEX.text())
+            SET_INFO['DEX_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set2_DEX_UNIQUE.text())
             
-            SET_INFO['INT_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_INT.text())
+            SET_INFO['INT_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set2_INT_UNIQUE.text())
             
-            SET_INFO['LUK_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_LUK.text())
+            SET_INFO['LUK_UNIQUE'] += myUI.textToFloat(myUI.hexaSetting_Set2_LUK_UNIQUE.text())
             
             
             
