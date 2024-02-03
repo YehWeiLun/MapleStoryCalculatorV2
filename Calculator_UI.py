@@ -18,6 +18,7 @@ class Calculator_UI():
         me.tabpanel.addTab(me.desingPage_Parameter(), '角色參數')
         me.tabpanel.addTab(me.desingPage_SeedRing(), '塔戒')
         me.tabpanel.addTab(me.desingPage_Equipment(), '裝備變更')
+        me.tabpanel.addTab(me.desingPage_Hexa(), 'Hexa變更')
         me.tabpanel.addTab(me.desingPage_Tools(), '工具')
         me.tabpanel.addTab(me.desingPage_Memo(), '使用說明')
         
@@ -487,6 +488,54 @@ class Calculator_UI():
 
         # me.viewEquipment_Set1_IGNORE_P.setEnabled(False)
         # me.viewEquipment_Set2_IGNORE_P.setEnabled(False)
+        
+        return page
+    # function: 裝備變更
+    def desingPage_Hexa(me):
+        page = QtWidgets.QWidget()
+
+        
+        me.makeField(page, QtWidgets.QLabel(page), 15, 15, 130, 24).setText('原裝備能力')
+        me.makeField(page, QtWidgets.QLineEdit(page),11, 38, 138, 368).setEnabled(False)
+        me.hexaSetting_origin_STR       = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  1, 130, 24, 'STR' , 55, '')        
+        me.hexaSetting_origin_DEX       = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  2, 130, 24, 'DEX' , 55, '')
+        me.hexaSetting_origin_INT       = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  3, 130, 24, 'INT' , 55, '')
+        me.hexaSetting_origin_LUK       = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  4, 130, 24, 'LUK' , 55, '')        
+        me.hexaSetting_origin_ATTACK    = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  5, 130, 24, '攻擊' , 55, '')        
+        me.hexaSetting_origin_DMG_P     = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  6, 130, 24, '傷害%', 55, '％')
+        me.hexaSetting_origin_STRIKE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  7, 130, 24, '爆傷%', 55, '％')
+        me.hexaSetting_origin_IGNORE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 15, 15 + 26 *  8, 130, 24, '無視%', 55, '％')
+        # me.hexaSetting_origin_IMPROVE   = me.makeField(page, QtWidgets.QLabel(page), 15, 15 + 26 * 15, 130, 24)
+        # me.hexaSetting_origin_IMPROVE.setText('增幅 0.0%')
+
+        me.makeField(page, QtWidgets.QLabel(page),192, 15, 130, 24).setText('更換裝備1')
+        me.makeField(page, QtWidgets.QLineEdit(page),188, 38, 138, 368).setEnabled(False)
+        me.hexaSetting_Set1_STR       = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  1, 130, 24, 'STR' , 55, '')        
+        me.hexaSetting_Set1_DEX       = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  2, 130, 24, 'DEX' , 55, '')        
+        me.hexaSetting_Set1_INT       = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  3, 130, 24, 'INT' , 55, '')        
+        me.hexaSetting_Set1_LUK       = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  4, 130, 24, 'LUK' , 55, '')                
+        me.hexaSetting_Set1_ATTACK    = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  5, 130, 24, '攻擊' , 55, '')        
+        me.hexaSetting_Set1_DMG_P     = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  6, 130, 24, '傷害%', 55, '％')
+        me.hexaSetting_Set1_STRIKE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  7, 130, 24, '爆傷%', 55, '％')
+        me.hexaSetting_Set1_IGNORE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 192, 15 + 26 *  8, 130, 24, '無視%', 55, '％')
+        me.hexaSetting_Set1_IMPROVE   = me.makeField(page, QtWidgets.QLabel(page), 192, 15 + 26 * 15, 130, 24)
+        me.hexaSetting_Set1_IMPROVE.setText('增幅 0.0%')
+
+        me.makeField(page, QtWidgets.QLabel(page),370, 15, 130, 24).setText('更換裝備2')
+        me.makeField(page, QtWidgets.QLineEdit(page),366, 38, 138, 368).setEnabled(False)
+        me.hexaSetting_Set2_STR       = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  1, 130, 24, 'STR' , 55, '')        
+        me.hexaSetting_Set2_DEX       = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  2, 130, 24, 'DEX' , 55, '')        
+        me.hexaSetting_Set2_INT       = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  3, 130, 24, 'INT' , 55, '')        
+        me.hexaSetting_Set2_LUK       = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  4, 130, 24, 'LUK' , 55, '')                
+        me.hexaSetting_Set2_ATTACK    = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  5, 130, 24, '攻擊' , 55, '')        
+        me.hexaSetting_Set2_DMG_P     = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  6, 130, 24, '傷害%', 55, '％')
+        me.hexaSetting_Set2_STRIKE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  7, 130, 24, '爆傷%', 55, '％')
+        me.hexaSetting_Set2_IGNORE_P  = me.makeField(page, QtWidgets.QLineEdit(page), 370, 15 + 26 *  8, 130, 24, '無視%', 55, '％')
+        me.hexaSetting_Set2_IMPROVE   = me.makeField(page, QtWidgets.QLabel(page), 370, 15 + 26 * 15, 130, 24)
+        me.hexaSetting_Set2_IMPROVE.setText('增幅 0.0%')
+
+        # me.hexaSetting_Set1_IGNORE_P.setEnabled(False)
+        # me.hexaSetting_Set2_IGNORE_P.setEnabled(False)
         
         return page
     

@@ -116,7 +116,34 @@ class AppWindow(QtWidgets.QDialog):
         myUI.viewEquipment_Set2_DMG_P.textChanged.connect(me.calc_Equipment)
         myUI.viewEquipment_Set2_STRIKE_P.textChanged.connect(me.calc_Equipment)
         myUI.viewEquipment_Set2_IGNORE_P.textChanged.connect(me.calc_Equipment)
+       
+        # page: Hexa設定變更
+        myUI.hexaSetting_origin_STR.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_DEX.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_INT.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_ATTACK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_origin_DMG_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_origin_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_origin_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
 
+        myUI.hexaSetting_Set1_STR.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_DEX.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_INT.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_ATTACK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set1_DMG_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set1_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set1_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
+
+        myUI.hexaSetting_Set2_STR.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_DEX.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_INT.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_LUK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_ATTACK.textChanged.connect(me.calc_HexaSetting)        
+        myUI.hexaSetting_Set2_DMG_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set2_STRIKE_P.textChanged.connect(me.calc_HexaSetting)
+        myUI.hexaSetting_Set2_IGNORE_P.textChanged.connect(me.calc_HexaSetting)
         # page: 工具
         myUI.btnTools_IGNORE_SUBMIT.clicked.connect(me.doCalcIgnore)
         
@@ -207,7 +234,7 @@ class AppWindow(QtWidgets.QDialog):
             
             data.close()
             me.doSubmit()
-        except Exception:
+        except Exception as e:
             pass    
     
     # event: 儲存檔案
@@ -280,7 +307,7 @@ class AppWindow(QtWidgets.QDialog):
 
             data.writelines(array)
             data.close()
-        except Exception:
+        except Exception as e:
             pass    
     
     # event: 送出資料
@@ -334,9 +361,11 @@ class AppWindow(QtWidgets.QDialog):
             me.calc_Improve()
             me.calc_SeedRing()
             me.calc_Equipment()
+            me.calc_HexaSetting()
             QtWidgets.QMessageBox.information(me, '提示', '計算完成')
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            
+            me.show_warning(me, '提示', '輸入資料有誤')
             pass
 
     # event: 計算等效數值
@@ -425,8 +454,8 @@ class AppWindow(QtWidgets.QDialog):
             
             myUI.viewParameter_EQUIVALENT_LUK.setText(toRoundStr(STATE_INFO['LUK_CLEAR']))
             myUI.viewParameter_EQUIVALENT_LUK_P.setText(toRoundStr(STATE_INFO['LUK_P']*100))
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤')
             pass
 
     # event: 計算增幅
@@ -564,8 +593,8 @@ class AppWindow(QtWidgets.QDialog):
 
             myUI.viewParameter_ESTIMATE_STRIKE_P.setText(str(round(ESTIMATE_INFO['STRIKE_P']*100,2)))
             myUI.viewParameter_ESTIMATE_IGNORE_P.setText(str(round(ESTIMATE_INFO['IGNORE_P']*100,2)))
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤')
             pass
 
     # event: 計算塔戒
@@ -868,8 +897,8 @@ class AppWindow(QtWidgets.QDialog):
             myUI.viewSeedRing_STRIKE_LV4.setText(str(SEED_VALUE) + '%')
             myUI.viewSeedRing_STRIKE_LV4.setStyleSheet(myUI.getColor(SEED_VALUE))
             
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤')
             pass
     
     # function: 計算裝備更換
@@ -960,8 +989,100 @@ class AppWindow(QtWidgets.QDialog):
             myUI.viewEquipment_Set2_IMPROVE.setText('增幅 ' + str(toPercentText(IMPROVE_INFO['TOTAL'])))
 
 
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤')
+            pass
+
+    # function: 計算裝備更換
+    def calc_HexaSetting(me):
+        try:
+            myCharactor = me.myCharactor
+            myUI = me.myUI
+
+            if (myCharactor.isReset): return False
+            def getData():
+                new_data = {
+                    'DMG_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_DMG_P.text()) / 100),
+                    'ATTACK': 0 - myUI.textToFloat(myUI.hexaSetting_origin_ATTACK.text()),
+                    
+                    'STRIKE_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_STRIKE_P.text()) / 100),
+                    'IGNORE_P': 0 - (myUI.textToFloat(myUI.hexaSetting_origin_IGNORE_P.text()) / 100),
+
+                    'STR_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_STR.text()),
+                    
+
+                    'DEX_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_DEX.text()),
+                    
+
+                    'INT_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_INT.text()),
+                    
+
+                    'LUK_CLEAR': 0 - myUI.textToFloat(myUI.hexaSetting_origin_LUK.text()),
+                    
+
+                    
+                }
+                return new_data
+
+            def toPercentText(value):
+                return str(round((value-1) * 100, 2)) + '%'
+
+            SET_INFO = getData()
+            SET_INFO['DMG_P'] += (myUI.textToFloat(myUI.hexaSetting_Set1_DMG_P.text())/100)
+            SET_INFO['ATTACK'] += myUI.textToFloat(myUI.hexaSetting_Set1_ATTACK.text())
+            
+            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set1_STRIKE_P.text())/100)
+            SET_INFO['STR_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_STR.text())
+            
+            SET_INFO['DEX_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_DEX.text())
+            
+            SET_INFO['INT_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_INT.text())
+            
+            SET_INFO['LUK_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set1_LUK.text())
+            
+            
+            
+            # 重算等效無視
+            IGNORE_TO = myCharactor.calcIgnore(myCharactor.getData()['IGNORE_P'], SET_INFO['IGNORE_P'])
+            IGNORE_TO = myCharactor.calcIgnore(IGNORE_TO, (myUI.textToFloat(myUI.hexaSetting_Set1_IGNORE_P.text())/100))
+            SET_INFO['IGNORE_P'] = 0
+            if (IGNORE_TO > myCharactor.getData()['IGNORE_P']):
+                SET_INFO['IGNORE_P'] = 1 - ((1 - IGNORE_TO) / (1 - myCharactor.getData()['IGNORE_P']))
+            if (IGNORE_TO < myCharactor.getData()['IGNORE_P']):
+                SET_INFO['IGNORE_P'] = ((1 - myCharactor.getData()['IGNORE_P']) / (1 - IGNORE_TO)) - 1
+            
+            # 計算加總
+            IMPROVE_INFO = myCharactor.calcImprove(SET_INFO)
+            myUI.hexaSetting_Set1_IMPROVE.setText('增幅 ' + str(toPercentText(IMPROVE_INFO['TOTAL'])))
+
+            SET_INFO = getData()
+            SET_INFO['DMG_P'] += (myUI.textToFloat(myUI.hexaSetting_Set2_DMG_P.text())/100)
+            SET_INFO['ATTACK'] += myUI.textToFloat(myUI.hexaSetting_Set2_ATTACK.text())
+            
+            SET_INFO['STRIKE_P'] += (myUI.textToFloat(myUI.hexaSetting_Set2_STRIKE_P.text())/100)
+            SET_INFO['STR_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_STR.text())
+            
+            SET_INFO['DEX_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_DEX.text())
+            
+            SET_INFO['INT_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_INT.text())
+            
+            SET_INFO['LUK_CLEAR'] += myUI.textToFloat(myUI.hexaSetting_Set2_LUK.text())
+            
+            
+            
+            IGNORE_TO = myCharactor.calcIgnore(myCharactor.getData()['IGNORE_P'], SET_INFO['IGNORE_P'])
+            IGNORE_TO = myCharactor.calcIgnore(IGNORE_TO, (myUI.textToFloat(myUI.hexaSetting_Set2_IGNORE_P.text())/100))
+            SET_INFO['IGNORE_P'] = 0
+            if (IGNORE_TO > myCharactor.getData()['IGNORE_P']):
+                SET_INFO['IGNORE_P'] = 1 - ((1 - IGNORE_TO) / (1 - myCharactor.getData()['IGNORE_P']))
+            if (IGNORE_TO < myCharactor.getData()['IGNORE_P']):
+                SET_INFO['IGNORE_P'] = ((1 - myCharactor.getData()['IGNORE_P']) / (1 - IGNORE_TO)) - 1
+            IMPROVE_INFO = myCharactor.calcImprove(SET_INFO)
+            myUI.hexaSetting_Set2_IMPROVE.setText('增幅 ' + str(toPercentText(IMPROVE_INFO['TOTAL'])))
+
+
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤')
             pass
 
     # funtion: 計算等效無視
@@ -993,7 +1114,7 @@ class AppWindow(QtWidgets.QDialog):
             IGNORE_AFTER  = myUI.textToFloat(IGNORE_AFTER_TXT) / 100
 
             if (IGNORE_BEFORE > 1 or IGNORE_RANGE > 1 or IGNORE_AFTER > 1):
-                QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+                me.show_warning(me, '提示', '輸入資料有誤')
                 return False
 
             if (IGNORE_AFTER_TXT == ''):
@@ -1024,9 +1145,13 @@ class AppWindow(QtWidgets.QDialog):
 
 
 
-        except Exception:
-            QtWidgets.QMessageBox.warning(me, '提示', '輸入資料有誤')
+        except Exception as e:
+            me.show_warning(me, '提示', '輸入資料有誤', e)
             pass
+    def show_warning(self, title, message, e=None):
+        if(e!=None):
+            print(e)
+        QtWidgets.QMessageBox.warning(self, title, message)
 # ------------------ APP 入口 ------------------
 app = QtWidgets.QApplication(sys.argv)
 w = AppWindow()
